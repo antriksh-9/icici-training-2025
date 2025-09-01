@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -38,14 +42,25 @@ public class EmployeeRestController {
 
     @GetMapping("/employees/{id}")   
     public List<Employee> fetchEmployee(@PathVariable("id") int id){
-        return employees.stream()
+        List<Employee> emps =  employees.stream()
         .filter((e)-> e.id == id)
         .toList();
+
+        if(emps.size() > 0 ){
+            return emps;
+        }
+        else{
+            throw new EmployeeNotFoundException("Employee not found with Id " + id);
+        }
     }
 
     @PostMapping("/employees")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addEmployee(@RequestBody Employee employee) {
         employees.add(employee);
+        // if()
+        // return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
     @DeleteMapping("/employees/{id}")
