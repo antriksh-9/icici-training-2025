@@ -2,6 +2,7 @@ package com.icici.rest_api_db.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.icici.rest_api_db.entities.Itinerary;
 import com.icici.rest_api_db.entities.Trip;
 import com.icici.rest_api_db.repos.TripRepository;
 
@@ -59,6 +60,21 @@ public class TripController {
         e.printStackTrace();
        }
         
+    }
+
+    @PostMapping("/trips/{id}/itinerary")
+    public void addItineraryToTrip(@PathVariable("id")int id, @RequestBody Itinerary itinerary){
+        Optional<Trip> tripFound = tripRepository.findById(id);
+         if(tripFound.isPresent()){
+            Trip trip = tripFound.get();
+            List<Itinerary> itineraries = trip.getItineraries();
+            itineraries.add(itinerary);
+            trip.setItineraries(itineraries);
+            tripRepository.save(trip);
+         }
+         else{
+            throw new TripNotFoundException("Trip not found with id " + id);
+         }
     }
     
     

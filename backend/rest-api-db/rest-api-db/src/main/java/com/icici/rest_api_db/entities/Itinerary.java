@@ -1,29 +1,21 @@
 package com.icici.rest_api_db.entities;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
-public class Trip {
+public class Itinerary {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
-
     String title;
     String description;
-
-    LocalDate startDate;
-    LocalDate endDate;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    List<Itinerary> itineraries;
+    LocalDate date;
     public int getId() {
         return id;
     }
@@ -42,23 +34,11 @@ public class Trip {
     public void setDescription(String description) {
         this.description = description;
     }
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDate() {
+        return date;
     }
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-    public List<Itinerary> getItineraries() {
-        return itineraries;
-    }
-    public void setItineraries(List<Itinerary> itineraries) {
-        this.itineraries = itineraries;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     
