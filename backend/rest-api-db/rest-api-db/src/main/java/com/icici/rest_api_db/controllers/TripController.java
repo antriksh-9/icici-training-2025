@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.icici.rest_api_db.entities.Itinerary;
 import com.icici.rest_api_db.entities.Trip;
 import com.icici.rest_api_db.repos.TripRepository;
+import com.icici.rest_api_db.services.AuditLogService;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class TripController {
     @Autowired
     TripRepository tripRepository;
 
+    @Autowired
+    private AuditLogService auditLogService;
+
     // Logger logger = LoggerFactory.getLogger(TripController.class);
 
     @GetMapping("/trips")
@@ -48,6 +53,15 @@ public class TripController {
 
      @GetMapping("/trips/{id}")
     public Trip fetchATrip(@PathVariable("id") int id){
+
+        // In your service/controller, inject AuditLogService and call:
+        auditLogService.log(
+            "CREATE",
+            "Customer",
+            "123",
+            "adminUser",
+            Map.of("fieldChanged", "email", "oldValue", "a@b.com", "newValue", "b@b.com")
+        );
          Optional<Trip> tripFound = tripRepository.findById(id);
          if(tripFound.isPresent()){
             log.debug("Trip found " + tripFound.get());
