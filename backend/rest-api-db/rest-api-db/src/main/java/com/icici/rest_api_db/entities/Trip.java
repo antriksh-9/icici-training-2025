@@ -9,8 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
+
 
 @Entity
+@Data
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,42 +27,42 @@ public class Trip {
 
     @OneToMany(cascade = CascadeType.ALL)
     List<Itinerary> itineraries;
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-    public List<Itinerary> getItineraries() {
-        return itineraries;
-    }
-    public void setItineraries(List<Itinerary> itineraries) {
-        this.itineraries = itineraries;
-    }
+    // public int getId() {
+    //     return id;
+    // }
+    // public void setId(int id) {
+    //     this.id = id;
+    // }
+    // public String getTitle() {
+    //     return title;
+    // }
+    // public void setTitle(String title) {
+    //     this.title = title;
+    // }
+    // public String getDescription() {
+    //     return description;
+    // }
+    // public void setDescription(String description) {
+    //     this.description = description;
+    // }
+    // public LocalDate getStartDate() {
+    //     return startDate;
+    // }
+    // public void setStartDate(LocalDate startDate) {
+    //     this.startDate = startDate;
+    // }
+    // public LocalDate getEndDate() {
+    //     return endDate;
+    // }
+    // public void setEndDate(LocalDate endDate) {
+    //     this.endDate = endDate;
+    // }
+    // public List<Itinerary> getItineraries() {
+    //     return itineraries;
+    // }
+    // public void setItineraries(List<Itinerary> itineraries) {
+    //     this.itineraries = itineraries;
+    // }
 
     
 
