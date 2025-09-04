@@ -25,7 +25,7 @@ public class Trip {
     LocalDate startDate;
     LocalDate endDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<Itinerary> itineraries;
     // public int getId() {
     //     return id;

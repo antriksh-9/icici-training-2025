@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "0d884634-f264-41f8-8711-8e0bee4184c6",
+		"name": "ICICI Rest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "425296"
+	},
+	"item": [
+		{
+			"name": "trips",
+			"item": [
+				{
+					"name": "Fetch All Trips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch A Trip",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch A Trip By Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Trip",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/trips/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Trip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"title\": \"Tokyo trip\",\r\n        \"description\": \"10 day trip to Japan\",\r\n        \"startDate\": \"2025-09-02\",\r\n        \"endDate\": \"2025-09-24\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Itinerary To Trip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Day1\",\r\n    \"description\": \"Go hotel and rest\",\r\n    \"date\": \"2025-12-12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/trips/2/itinerary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"trips",
+								"2",
+								"itinerary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "itineraries",
+			"item": [
+				{
+					"name": "Fetch All Itineraries",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/itineraries",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"itineraries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Itinerary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/itineraries",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"itineraries"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "activities",
+			"item": [
+				{
+					"name": "Update Description of Activity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Go snokelling!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/activities/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"activities",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

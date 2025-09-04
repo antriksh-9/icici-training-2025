@@ -56,9 +56,9 @@ public class TripController {
 
         // In your service/controller, inject AuditLogService and call:
         auditLogService.log(
-            "CREATE",
-            "Customer",
-            "123",
+            "FIND",
+            "Trip",
+            ""+ id,
             "adminUser",
             Map.of("fieldChanged", "email", "oldValue", "a@b.com", "newValue", "b@b.com")
         );
