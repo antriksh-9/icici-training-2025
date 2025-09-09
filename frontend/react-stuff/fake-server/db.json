@@ -1,0 +1,25 @@
+{
+  "trips": [
+    {
+      "id": "1",
+      "title": "Paris",
+      "startDate": "2023-09-01",
+      "endDate": "2023-09-10",
+      "price": 1200,
+      "description": "Explore the city of lights with its iconic landmarks and rich culture."
+    },
+    {
+      "id": "2",
+      "title": "Tokyo",
+      "startDate": "2023-10-05",
+      "endDate": "2023-10-15",
+      "price": 1500,
+      "description": "Experience the blend of tradition and modernity in Japan's bustling capital."
+    },
+    {
+      "id": "0ed5",
+      "title": "Tokyo",
+      "description": "some description"
+    }
+  ]
+}

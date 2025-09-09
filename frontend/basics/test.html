@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Test Page</title>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+<body>
+    <h2 class="myclass">Some structure <span>New para</span></h2>
+    <h3 id="message" class="myclass">Some other heading</h3>
+    <button onclick="reverseContent()">Reverse</button>
+    <script>
+        console.log("Hello World");
+
+        function reverseContent() {
+            let element = document.getElementById("message");
+            let text = element.innerText;
+            let reversedText = text.split("").reverse().join("");
+            element.innerText = reversedText;
+        }
+    </script>
+</body>
+</html> 
