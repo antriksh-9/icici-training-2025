@@ -13,7 +13,7 @@ function ViewTrips() {
     function loadTrips() {
         console.log("Loading trips...");
         //api call
-        fetch('http://localhost:3000/trips')
+        fetch('http://localhost:9090/trips')
             .then(response => response.json())
             .then(data => {
                 console.log("Trips data:", data);

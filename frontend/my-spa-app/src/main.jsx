@@ -9,6 +9,7 @@ import About from './components/About.jsx'
 import Header from './components/Header.jsx'
 import ViewTrips from './components/ViewTrips.jsx'
 import AddTrip from './components/AddTrip.jsx'
+import Trip from './components/Trip.jsx'
 
 createRoot(document.getElementById('root')).render(
    <BrowserRouter>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/about" element={<About />} />
       <Route path="/trips" element={<ViewTrips />} />
       <Route path="/addtrip" element={<AddTrip />} />
+      <Route path="/trip/:id" element={<Trip />} />
     </Routes>
   </BrowserRouter>,
 )

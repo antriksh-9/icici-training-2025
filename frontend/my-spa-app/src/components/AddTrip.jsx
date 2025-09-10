@@ -5,14 +5,16 @@ function AddTrip() {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     const [message, setMessage] = useState(false);
 
     function addTrip() {
         // e.preventDefault();
         console.log("Add trip clicked");
-        const trip = { title, description };
+        const trip = { title, description, startDate, endDate };
         console.log("Trip to add:", trip);
-        fetch('http://localhost:3000/trips', {
+        fetch('http://localhost:9090/trips', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,12 +32,16 @@ function AddTrip() {
         } )  
     }
     function handleTitleChange(e) {
-        // console.log("Title changed:", e.target.value);
         setTitle(e.target.value);
     }
     function handleDescriptionChange(e) {
-        // console.log("Title changed:", e.target.value);
         setDescription(e.target.value);
+    }
+    function handleStartDateChange(e) {
+        setStartDate(e.target.value);
+    }
+    function handleEndDateChange(e) {
+        setEndDate(e.target.value);
     }
     return (
         <div className="container my-3">
@@ -58,6 +64,15 @@ function AddTrip() {
                     <label htmlFor="description" className="form-label">Description</label>
                     <textarea onChange={handleDescriptionChange} value={description} className="form-control" id="description" rows="3" placeholder="Enter trip description"></textarea>
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="startDate" className="form-label">Trip Start Date</label>
+                    <input type="date" onChange={handleStartDateChange} value={startDate} className="form-control" id="startDate" rows="3" />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="endDate" className="form-label">Trip End Date</label>
+                    <input type="date" onChange={handleEndDateChange} value={endDate} className="form-control" id="endDate" rows="3" />
+                </div>
+               
                 <button type="button" onClick={addTrip} className="btn btn-primary">Add Trip</button>
             </form>
         </div>

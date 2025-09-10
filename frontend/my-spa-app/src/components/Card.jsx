@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import Badge from "./Badge";
 
 
@@ -22,7 +23,7 @@ function Card(props) {
         <div className="card" style={{width: '18rem'}}>
             <img src="https://placehold.co/150X100" className="card-img-top" alt="..." />
             <div className="card-body">
-                <h5 className="card-title">{props.trip.title}</h5>
+                <h5 className="card-title"><Link to={`/trip/${props.trip.id}`}>{props.trip.title}</Link>  </h5>
                 <p className="card-text">{props.trip.description}</p>
                 <Badge caption="Views"></Badge>
                 <button onClick={deleteTrip} className="btn btn-danger"> X </button>
