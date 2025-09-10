@@ -8,10 +8,8 @@ const Itinerary = (props) => {
 
     return (
         <div>
-            <h3>{props.itinerary.title}</h3>
-            <p>{props.itinerary.description}</p>
-            <p>Date: {props.itinerary.date}</p>
-            {activityList}
+            
+            {/* {activityList} */}
         </div>
     );
 }

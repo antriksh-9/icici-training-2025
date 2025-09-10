@@ -1,0 +1,9 @@
+/* align span to right */
+span.right {
+    justify-content: right;
+    float: right;
+    font-size: small;
+    color: grey;
+    margin-left: 100px;
+
+}

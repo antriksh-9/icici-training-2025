@@ -1,8 +1,9 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Itinerary from "./Itinerary";
-import { Card } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 import { Tab, Tabs } from "react-bootstrap";
+import Activity from "./Activity";
 
 const Trip = () => {
 
@@ -26,11 +27,30 @@ const Trip = () => {
             });
     }, [params.id]);
 
-    const itinerariesList = trip && trip.itineraries.map((itinerary, index) => (
-        <Tab eventKey="home" title={itinerary.title}>
-            <Itinerary key={index} itinerary={itinerary} />
+    const itinerariesList = trip && trip.itineraries.map((itinerary, index) => {
+        
+        const activitiesList = itinerary.activities.map((activity, idx) => {    
+            return <Activity key={idx} activity={activity} />
+        });
+        
+        return (
+        <Tab key={index} eventKey={itinerary.title} title={itinerary.title}>
+            {/*  <span class="right">{itinerary.date}</span></strong> */}
+
+            <Container>
+                <Row>
+                    <Col><i>{itinerary.date}</i></Col>
+                    <Col><strong>{itinerary.description}</strong></Col> 
+                    <hr/>
+                </Row>
+                <Row>
+                    {activitiesList}
+                </Row>
+            </Container>
+            
         </Tab>
-    ));
+        )}
+);
 
     return (
         <div className="container my-3">
