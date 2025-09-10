@@ -19,10 +19,19 @@ public class ActivityController {
     @Autowired
     ActivityRepository activityRepository;
     
-    @DeleteMapping("/activities/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteActivity(@PathVariable("id") int id){
-        activityRepository.deleteById(id);
+   @PatchMapping("/activities/{id}")
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateActivity(@PathVariable("id") int id, @RequestBody Activity updatedActivity) {
+         Activity activity = activityRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Activity not found"));
+    
+        
+         if (updatedActivity.getDescription() != null) {
+              activity.setDescription(updatedActivity.getDescription());
+         }
+       
+    
+         activityRepository.save(activity);
     }
   
 }

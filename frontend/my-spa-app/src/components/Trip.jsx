@@ -8,6 +8,40 @@ import Activity from "./Activity";
 const Trip = () => {
 
     const [trip, setTrip] = useState();
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [startDate, setStartDate] = useState();
+
+      function handleTitleChange(e) {
+        setTitle(e.target.value);
+    }
+    function handleDescriptionChange(e) {
+        setDescription(e.target.value);
+    }
+    function handleStartDateChange(e) {
+        setStartDate(e.target.value);
+    }
+
+    const addItineraryToTrip = () => {
+        console.log("Adding itinerary to trip:", title, description, startDate);
+        const itinerary = { title, description, date: startDate };
+        fetch(`http://localhost:9090/trips/${trip.id}/itinerary`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(itinerary)
+        }).then(response => {
+            if (response.ok) {
+                console.log("Itinerary added successfully");
+                // Clear input fields
+                setTitle("");
+                setDescription("");
+                setStartDate();
+            }
+        })
+    }
+                // Reload trip details to show the new itinera
 
     const params = useParams();
     console.log("Trip ID from params:", params.id);
@@ -43,7 +77,7 @@ const Trip = () => {
                     <Col><strong>{itinerary.description}</strong></Col> 
                     <hr/>
                 </Row>
-                <Row>
+               <Row>
                     {activitiesList}
                 </Row>
             </Container>
@@ -60,6 +94,30 @@ const Trip = () => {
                 <Card>
                     <Card.Header>{trip.title}</Card.Header>
                     <Card.Body>
+                        <Container>
+                            <Row>
+                                <Col>
+                                        <div className="mb-3">
+                                            <label htmlFor="title" className="form-label">Itinerary Title</label>
+                                            <input onChange={handleTitleChange} value={title} type="text" className="form-control" id="title" placeholder="Enter itinerary title"/>
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="startDate" className="form-label">Itinerary Date</label>
+                                            <input type="date" onChange={handleStartDateChange} value={startDate} className="form-control" id="startDate" rows="3" />
+                                        </div>
+                                </Col>
+                                <Col>
+                                   
+                                        <div className="mb-3">
+                                            <label htmlFor="description" className="form-label">Itnineary Description</label>
+                                            <textarea onChange={handleDescriptionChange} value={description} className="form-control" id="description" rows="3" placeholder="Enter itinerary description"></textarea>
+                                        </div>
+                                        
+                                        <button type="button" onClick={addItineraryToTrip} className="btn btn-primary">Add Itinerary To Trip</button>
+                                       
+                                </Col>
+                            </Row>
+                        </Container>
                         <Card.Title>{trip.startDate} to {trip.endDate}</Card.Title>
                         <Card.Text>
                         {trip.description}
