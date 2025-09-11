@@ -2,10 +2,12 @@ package com.icici.rest_api_db.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.icici.rest_api_db.dto.TripDTO;
 import com.icici.rest_api_db.entities.Itinerary;
 import com.icici.rest_api_db.entities.Trip;
 import com.icici.rest_api_db.repos.TripRepository;
 import com.icici.rest_api_db.services.AuditLogService;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +19,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,16 +47,29 @@ public class TripController {
 
     // Logger logger = LoggerFactory.getLogger(TripController.class);
 
+    @Cacheable("trips")
     @GetMapping("/trips")
-    public List<Trip> fetchAllTrips() {
-        // logic to fetch from DB
-        return tripRepository.findAll();
+    public List<TripDTO> fetchAllTrips() {
+
+            log.info("Fetching all trips from the database");
+        return tripRepository.findAll().stream().map(trip -> {
+            TripDTO tripDTO = new TripDTO();
+            tripDTO.setId(trip.getId());
+            tripDTO.setTitle(trip.getTitle());
+            tripDTO.setDescription(trip.getDescription());
+            tripDTO.setStartDate(trip.getStartDate());
+            tripDTO.setEndDate(trip.getEndDate());
+            // tripDTO.setItineraries(null);
+            return tripDTO;
+        }).toList();
+        // return tripRepository.findAll();
     }
 
      @GetMapping("/trips/search")
-    public Trip fetchTripByName(@RequestParam("title") String title) {
-        // logic to fetch from DB
-        return tripRepository.findByTitle(title);
+    public Page<Trip> fetchTripByName(@RequestParam("title") String title, @RequestParam(value = "page", defaultValue = "0", required = false) Integer page, @RequestParam(value = "size",defaultValue = "2", required = false) Integer size, @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy){
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return tripRepository.findByTitleContaining(title, pageable); 
+       
     }
 
      @GetMapping("/trips/{id}")

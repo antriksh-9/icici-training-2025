@@ -1,10 +1,14 @@
 package com.icici.rest_api_db.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,7 +18,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Trip {
+public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
@@ -25,7 +29,13 @@ public class Trip {
     LocalDate startDate;
     LocalDate endDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    // @JsonIgnore
+    // dont alway fetch itineraries unless required
+
+    // lazy fetch not working
+    // https://stackoverflow.com/questions/37637320/jpa-hibernate-lazy-fetching
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Itinerary> itineraries;
     // public int getId() {
     //     return id;
