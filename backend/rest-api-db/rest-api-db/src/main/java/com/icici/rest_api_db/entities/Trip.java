@@ -13,11 +13,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
 public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +33,8 @@ public class Trip implements Serializable {
 
     LocalDate startDate;
     LocalDate endDate;
+
+    private String imageUrl;
 
     // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     // @JsonIgnore
@@ -73,6 +80,8 @@ public class Trip implements Serializable {
     // public void setItineraries(List<Itinerary> itineraries) {
     //     this.itineraries = itineraries;
     // }
+
+
 
     
 

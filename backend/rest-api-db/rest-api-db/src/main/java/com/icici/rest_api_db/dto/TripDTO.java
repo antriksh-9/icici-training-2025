@@ -17,6 +17,8 @@ public class TripDTO {
     LocalDate startDate;
     LocalDate endDate;
 
+    String imageUrl;
+
     // List<Itinerary> itineraries;
     
 }

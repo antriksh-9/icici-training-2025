@@ -1,16 +1,18 @@
 package com.icici.rest_api_db.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.icici.rest_api_db.dto.TripDTO;
 import com.icici.rest_api_db.entities.Itinerary;
 import com.icici.rest_api_db.entities.Trip;
 import com.icici.rest_api_db.repos.TripRepository;
 import com.icici.rest_api_db.services.AuditLogService;
-
+import com.icici.rest_api_db.services.TripService;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,11 +47,15 @@ public class TripController {
 
     @Autowired
     private AuditLogService auditLogService;
+    
+    @Autowired
+    TripService tripService;
 
     // Logger logger = LoggerFactory.getLogger(TripController.class);
 
     @Cacheable("trips")
     @GetMapping("/trips")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<TripDTO> fetchAllTrips() {
 
             log.info("Fetching all trips from the database");
@@ -59,6 +66,7 @@ public class TripController {
             tripDTO.setDescription(trip.getDescription());
             tripDTO.setStartDate(trip.getStartDate());
             tripDTO.setEndDate(trip.getEndDate());
+            tripDTO.setImageUrl(trip.getImageUrl());
             // tripDTO.setItineraries(null);
             return tripDTO;
         }).toList();
@@ -95,9 +103,26 @@ public class TripController {
     }
 
     @PostMapping("/trips")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public void addTrips(@RequestBody Trip trip) {
         tripRepository.save(trip);
+    }
+
+
+    @PostMapping("/create-with-image")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createTripWithImage(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+        
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        
+        tripService.createTripWithImage(title, description, start, end, image);
     }
 
     @DeleteMapping("/trips/{id}")
