@@ -3,10 +3,17 @@ const express = require('express');
 const router = express.Router();
 const Trip = require('../schemas/Trip');
 const Itinerary = require('../schemas/Itinerary');
+const advancedResults = require('../middlewares/advancedResults');
 
-router.get('/trips', async (req, res) => {
-    const trips = await Trip.find();
-    res.json(trips);
+// router.get('/trips', async (req, res) => {
+//     const trips = await Trip.find();
+//     res.json(trips);
+// });
+
+router.get('/trips', advancedResults(Trip), async (req, res) => {
+    // const trips = await Trip.find();
+    // res.json(trips);
+    res.json(res.advancedResults);
 });
 
 router.get('/trips/:id', async (req, res) => {

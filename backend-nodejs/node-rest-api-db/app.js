@@ -6,10 +6,11 @@ const mongoose = require('mongoose');
 const Trip = require('./schemas/Trip');
 const cors = require('cors');
 const requestTime = require('./middlewares/requestTimeLog');
+var colors = require('@colors/colors');
 
 async function connectToDb() {
   await mongoose.connect('mongodb://127.0.0.1:27017/icici_db');
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB'.green);
 }
 connectToDb();
 

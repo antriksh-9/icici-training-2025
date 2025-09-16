@@ -2,11 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Itinerary = require('../schemas/Itinerary');
 const Activity = require('../schemas/Activity');
+const advancedResults = require('../middlewares/advancedResults');
 
-router.get('/itineraries', async (req, res) => {
-    const itineraries = await Itinerary.find();
-    res.json(itineraries);
+router.get('/itineraries', advancedResults(Itinerary), async (req, res) => {
+    // const itineraries = await Itinerary.find();
+    // res.json(itineraries);
+    res.json(res.advancedResults);
 });
+
+// router.get('/itineraries', async (req, res) => {
+//     const itineraries = await Itinerary.find();
+//     res.json(itineraries);
+// });
 
 router.get('/itineraries/:id', async (req, res) => {
     const { id } = req.params;

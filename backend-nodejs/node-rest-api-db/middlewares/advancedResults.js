@@ -15,16 +15,13 @@ const advancedResults = (model, include) => async (req, res, next) => {
   // Create query string
   let queryStr = JSON.stringify(reqQuery);
 
-  // Create operators ($gt, $gte, $lt, $lte, $in)
-  queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, (match) => `$${match}`);
+//   // Create operators ($gt, $gte, $lt, $lte, $in)
+//   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, (match) => `$${match}`);
 
   // Finding resource
-  query = { where: JSON.parse(queryStr) };
+  query = JSON.parse(queryStr);
+  console.log("queryStr", query);
 
-  // If fetching by ID
-  if (req.params.id) {
-    query = { where: { id: req.params.id } };
-  }
 
   // Select Fields
   if (req.query.select) {
@@ -32,18 +29,11 @@ const advancedResults = (model, include) => async (req, res, next) => {
     query.attributes = fields.split(" ");
   }
 
-  // Sort
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join(" ");
-    query.order = [sortBy];
-  }
-
   // Pagination (only if not fetching by ID)
   if (!req.params.id) {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 25;
     const offset = (page - 1) * limit;
-
     query.offset = offset;
     query.limit = limit;
   }
@@ -55,37 +45,17 @@ const advancedResults = (model, include) => async (req, res, next) => {
 
   console.log("query", query);
 
+  let sortBy = "-createdAt";
   // Executing query
-  const results = await model.findAll(query);
-
-  // Total count for pagination (only if not fetching by ID)
-  let totalCount = 1;
-  if (!req.params.id) {
-    totalCount = await model.count({ where: JSON.parse(queryStr) });
+    if (req.query.sort) {
+        sortBy = req.query.sort.split(",").join(" ");
   }
-
-  // Pagination result
-  const pagination = {};
-  if (!req.params.id) {
-    if (query.offset > 0) {
-      pagination.prev = {
-        page: page - 1,
-        limit,
-      };
-    }
-
-    if (query.offset + query.limit < totalCount) {
-      pagination.next = {
-        page: page + 1,
-        limit,
-      };
-    }
-  }
+  const results = await model.find().sort(sortBy).select(query.attributes).limit(query.limit).skip(query.offset);
+  console.log("results", results);
 
   res.advancedResults = {
     success: true,
     count: results.length,
-    pagination,
     data: results,
   };
 
