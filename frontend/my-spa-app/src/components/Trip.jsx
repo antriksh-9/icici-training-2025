@@ -49,7 +49,7 @@ const Trip = () => {
     useEffect(() => {
         // Fetch trip details using params.id
         console.log("Fetching details for trip ID:", params.id);
-        fetch(`http://localhost:9090/trips/${params.id}`)
+        fetch(`http://localhost:3000/api/trips/${params.id}`)
             .then(response => response.json())
             .then(data => {
                 console.log("Trip details:", data);

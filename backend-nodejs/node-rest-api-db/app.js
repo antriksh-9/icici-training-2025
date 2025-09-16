@@ -4,6 +4,8 @@ const router = express.Router()
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Trip = require('./schemas/Trip');
+const cors = require('cors');
+const requestTime = require('./middlewares/requestTimeLog');
 
 async function connectToDb() {
   await mongoose.connect('mongodb://127.0.0.1:27017/icici_db');
@@ -11,9 +13,17 @@ async function connectToDb() {
 }
 connectToDb();
 
+
+// chain of middlewares
 app.use(bodyParser.json());
+app.use(cors());
+app.use(requestTime)
+
+
 
 app.use('/api', require('./routes/Trip'));
+app.use('/api', require('./routes/Itinerary'));
+app.use('/api', require('./routes/Activity'));
 
 app.get('/', (req, res) => {
     res.send('Hello World Change!');

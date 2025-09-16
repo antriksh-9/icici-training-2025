@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Trip = require('../schemas/Trip');
+const Itinerary = require('../schemas/Itinerary');
 
 router.get('/trips', async (req, res) => {
     const trips = await Trip.find();
@@ -11,6 +12,12 @@ router.get('/trips', async (req, res) => {
 router.get('/trips/:id', async (req, res) => {
     const { id } = req.params;
     const trip = await Trip.findById(id);
+    //load itineraries
+    await trip.populate('itineraries');
+    // load activities for each itinerary
+    for (let itinerary of trip.itineraries) {
+        await itinerary.populate('activities');
+    }
     res.json(trip);
 });
 
@@ -31,6 +38,20 @@ router.patch('/trips/:id', async (req, res) => {
     const updatedTrip = await Trip.findByIdAndUpdate(id, req.body, { new: true });
     res.json(updatedTrip);
 });
+
+
+//add itinerary to trip
+router.post('/trips/:tripId/itinerary', async (req, res) => {
+    const { tripId } = req.params;
+   
+    const newItinerary = new Itinerary(req.body);
+    await newItinerary.save();
+    
+    const trip = await Trip.findById(tripId);
+    trip.itineraries.push(newItinerary._id);
+    await trip.save();
+    res.status(201).json(newItinerary);
+})
 
 module.exports = router;
 

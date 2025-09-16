@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 
 //schema
 const tripSchema = new mongoose.Schema({
-  title: String,
+  title: {type: String, required: true, unique: true},
   price: Number,
-  description: String
+  description: String,
+  startDate : {type: Date},
+  endDate : Date,
+  itineraries: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Itinerary' }]
+
 });
 
 //model
