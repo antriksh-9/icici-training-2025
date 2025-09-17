@@ -8,5 +8,6 @@ public class TripBooking {
     String title;
     int pax;
     double bookingAmount;
+    int port;
 
 }

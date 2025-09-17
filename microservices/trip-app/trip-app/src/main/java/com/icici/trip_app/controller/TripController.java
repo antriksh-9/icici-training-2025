@@ -1,5 +1,6 @@
 package com.icici.trip_app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,9 @@ import com.icici.trip_app.entity.*;
 @RestController
 @RequestMapping("/api/trips")
 public class TripController {
+
+    @Value("${server.port}")
+    private int port;
 
     @Autowired
     private TripService tripService;
@@ -30,6 +34,7 @@ public class TripController {
     @GetMapping("/search/{title}")
     public ResponseEntity<Trip> searchTripsByTitle(@PathVariable String title) {
         Trip trip = tripService.searchTripsByTitle(title);
+        trip.setPort(port);
         return ResponseEntity.ok(trip);
     }
     

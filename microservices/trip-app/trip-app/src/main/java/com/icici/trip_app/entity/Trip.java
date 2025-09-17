@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.Transient;
 
 
 @Entity
@@ -15,6 +17,10 @@ public class Trip {
     private String title;
     private String description;
     private Double price;
+
+    //ignore this field for database mapping
+    @Transient
+    int port;
 
     public Trip() {
     }
@@ -56,4 +62,14 @@ public class Trip {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    
 }
